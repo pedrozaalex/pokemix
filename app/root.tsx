@@ -27,6 +27,7 @@ function Document({
         <meta name='viewport' content='width=device-width,initial-scale=1' />
         <Meta />
         <Links />
+        <ColorModeScript initialColorMode={'dark'} />
       </head>
       <body>
         <main>{children}</main>
@@ -42,7 +43,6 @@ export default function App(): ReactElement {
   return (
     <Document>
       <ChakraProvider>
-        <ColorModeScript />
         <Box h={'5rem'}>
           <Navbar />
         </Box>
