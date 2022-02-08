@@ -1,28 +1,25 @@
-import type { LinksFunction, MetaFunction } from 'remix';
 import {
   Links,
   LiveReload,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from 'remix';
-import styles from './tailwind.css';
 import { Navbar } from '~/components/navbar';
+import { Box, ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+import React, { ReactElement } from 'react';
 
 export const meta: MetaFunction = () => ({ title: 'New Remix App' });
 
-export const links: LinksFunction = () => [
-  {
-    rel: 'stylesheet',
-    href: 'https://unpkg.com/modern-css-reset@1.4.0/dist/reset.min.css',
-  },
-  {
-    rel: 'stylesheet',
-    href: styles,
-  },
-];
-export default function App(): JSX.Element {
+function Document({
+  children,
+  title = 'App title',
+}: {
+  children: React.ReactNode;
+  title?: string;
+}) {
   return (
     <html lang='en'>
       <head>
@@ -31,17 +28,28 @@ export default function App(): JSX.Element {
         <Meta />
         <Links />
       </head>
-      <body className={'h-screen w-screen bg-gray-100'}>
-        <nav className={'bg-fuchsia-400 h-28 grid shadow-xl'}>
-          <Navbar />
-        </nav>
-        <main className={'h-[calc(100vh-7rem)]'}>
-          <Outlet />
-        </main>
+      <body>
+        <main>{children}</main>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
+  );
+}
+
+export default function App(): ReactElement {
+  return (
+    <Document>
+      <ChakraProvider>
+        <ColorModeScript />
+        <Box h={'5rem'}>
+          <Navbar />
+        </Box>
+        <Box h={'calc(100vh - 5rem)'}>
+          <Outlet />
+        </Box>
+      </ChakraProvider>
+    </Document>
   );
 }

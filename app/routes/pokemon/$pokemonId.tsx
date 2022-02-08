@@ -3,12 +3,24 @@ import { Pokemon, PokemonClient, PokemonSpecies } from 'pokenode-ts';
 import { TitleCase } from '~/utils/titleCase';
 import { Sprites } from '~/components/sprites';
 import { useMemo } from 'react';
-import { Stat } from '~/components/stat';
+import {
+  Box,
+  Flex,
+  Heading,
+  HStack,
+  SimpleGrid,
+  Text,
+  useColorModeValue,
+  VStack,
+} from '@chakra-ui/react';
+import { PokemonBattleStats } from '~/components/pokemonBattleStats';
+import { PokemonBadges } from '~/components/pokemonBadges';
+import { PokemonTypes } from '~/components/pokemonTypes';
 
 const api = new PokemonClient();
 
 export const loader: LoaderFunction = async ({ params }) => {
-  // Get Pokemon and pokemon species data and return combination of both
+  // Get Pokémon and Pokémon species data and return combination of both
   return Promise.all([
     api.getPokemonById(Number(params.pokemonId)),
     api.getPokemonSpeciesById(Number(params.pokemonId)),
@@ -26,41 +38,68 @@ export default function PokemonRoute() {
   }, [pokemon.flavor_text_entries]);
 
   return (
-    <div className={'bg-white rounded-3xl p-8 shadow'}>
-      <h1 className={'text-5xl font-bold'}>{TitleCase(pokemon.name)}</h1>
+    <Box>
+      <SimpleGrid
+        m={8}
+        p={8}
+        bg={useColorModeValue('white', 'gray.700')}
+        borderRadius={16}
+        columns={2}
+        spacing={4}
+      >
+        <Box>
+          <HStack align={'flex-start'}>
+            <Heading as={'h1'} size={'xl'}>
+              {TitleCase(pokemon.name)}
+            </Heading>
+            <PokemonBadges
+              isBaby={pokemon.is_baby}
+              isLegendary={pokemon.is_legendary}
+              isMythical={pokemon.is_mythical}
+            />
+          </HStack>
 
-      <br />
+          <br />
 
-      <Sprites sprites={pokemon.sprites} />
+          <Sprites sprites={pokemon.sprites} />
+          <PokemonTypes types={pokemon.types} />
 
-      <br />
+          <br />
 
-      <div className={'max-w-md grid grid-cols-3 gap-2'}>
-        <section className={''}>
-          <h2 className={'text-xl font-bold'}>Stats</h2>
-          <p>Height: {(pokemon.height / 10).toFixed(2)}m</p>
-          <p>Weight: {(pokemon.weight / 10).toFixed(2)}kg</p>
-          <p>Base XP: {pokemon.base_experience}</p>
-        </section>
+          <Flex>
+            <Box as={'section'} flex={'1'}>
+              <Heading as={'h3'} size={'sm'} display={'inline'}>
+                Height:{' '}
+              </Heading>
+              <Text as={'span'}>{(pokemon.height / 10).toFixed(2)} m</Text>
+              <br />
+              <Heading as={'h3'} size={'sm'} display={'inline'}>
+                Weight:{' '}
+              </Heading>
+              <Text as={'span'}>{(pokemon.weight / 10).toFixed(2)} kg</Text>
+              <br />
+              <Heading as={'h3'} size={'sm'} display={'inline'}>
+                Base XP:{' '}
+              </Heading>
+              <Text as={'span'}>{pokemon.base_experience}</Text>
+            </Box>
 
-        {flavorText && (
-          <section className={'col-span-2'}>
-            <h2 className={'text-xl font-bold'}>Flavor Text</h2>
-            <p>{flavorText}</p>
-          </section>
-        )}
-      </div>
+            {flavorText && (
+              <Box as={'section'} flex={'2'}>
+                <Heading as={'h2'} size='md'>
+                  Description
+                </Heading>
+                <Text>{flavorText}</Text>
+              </Box>
+            )}
+          </Flex>
 
-      <br />
+          <br />
 
-      <h2 className={'text-xl font-bold'}>Base Stats</h2>
-      <ul className={`grid grid-cols-6 gap-1`}>
-        {pokemon.stats.map(s => (
-          <li key={s.stat.name}>
-            <Stat stat={s} />
-          </li>
-        ))}
-      </ul>
-    </div>
+          <PokemonBattleStats stats={pokemon.stats} />
+        </Box>
+        <VStack align={'flex-start'} />
+      </SimpleGrid>
+    </Box>
   );
 }

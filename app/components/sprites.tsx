@@ -7,6 +7,7 @@ import {
   faSmile,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import { HStack, IconButton, VStack } from '@chakra-ui/react';
 
 type PropsType = {
   sprites: PokemonSprites;
@@ -51,47 +52,49 @@ export const Sprites = React.memo(
     }, [showShiny, showFemale, sprites]);
 
     return (
-      <div className={'flex items-center gap-2 justify-center'}>
+      <HStack spacing={2}>
         {displayedSprites.front && (
-          <img
-            src={displayedSprites.front}
-            alt='front sprite'
-            className={'border'}
-          />
+          <img src={displayedSprites.front} alt='front sprite' />
         )}
         {displayedSprites.back && (
-          <img
-            src={displayedSprites.back}
-            alt='back sprite'
-            className={'border'}
-          />
+          <img src={displayedSprites.back} alt='back sprite' />
         )}
 
-        <div className={'flex flex-col items-start gap-2'}>
-          <button
+        <VStack spacing={2}>
+          <IconButton
+            variant='solid'
+            colorScheme='purple'
             onClick={() => setShowShiny(s => !s)}
-            className={'bg-fuchsia-400 rounded aspect-square h-8'}
-          >
-            {showShiny ? (
-              <FontAwesomeIcon icon={faSmile} size={'sm'} />
-            ) : (
-              <FontAwesomeIcon icon={faStar} size={'sm'} />
-            )}
-          </button>
-          {sprites.front_female && (
-            <button
-              onClick={() => setShowFemale(s => !s)}
-              className={'bg-fuchsia-400 rounded aspect-square h-8'}
-            >
-              {showFemale ? (
-                <FontAwesomeIcon icon={faFemale} size={'1x'} />
+            title={showShiny ? 'Show default sprite' : 'Show shiny sprite'}
+            aria-label={showShiny ? 'Show default sprite' : 'Show shiny sprite'}
+            icon={
+              showShiny ? (
+                <FontAwesomeIcon icon={faSmile} size={'sm'} />
               ) : (
-                <FontAwesomeIcon icon={faMale} size={'1x'} />
-              )}
-            </button>
+                <FontAwesomeIcon icon={faStar} size={'sm'} />
+              )
+            }
+          />
+          {sprites.front_female && (
+            <IconButton
+              variant='solid'
+              colorScheme='purple'
+              onClick={() => setShowFemale(s => !s)}
+              aria-label={
+                showFemale ? 'Show male sprite' : 'Show female sprite'
+              }
+              title={showFemale ? 'Show male sprite' : 'Show female sprite'}
+              icon={
+                showFemale ? (
+                  <FontAwesomeIcon icon={faFemale} size={'1x'} />
+                ) : (
+                  <FontAwesomeIcon icon={faMale} size={'1x'} />
+                )
+              }
+            />
           )}
-        </div>
-      </div>
+        </VStack>
+      </HStack>
     );
   },
   (prev, next) => prev.sprites.front_default === next.sprites.front_default
