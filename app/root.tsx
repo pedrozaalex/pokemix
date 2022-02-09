@@ -1,5 +1,6 @@
 import {
   Links,
+  LinksFunction,
   LiveReload,
   Meta,
   MetaFunction,
@@ -10,8 +11,16 @@ import {
 import { Navbar } from '~/components/navbar';
 import { Box, ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import React, { ReactElement } from 'react';
+import rootStyles from '~/styles/root.css';
 
 export const meta: MetaFunction = () => ({ title: 'New Remix App' });
+
+export const links: LinksFunction = () => [
+  {
+    rel: 'stylesheet',
+    href: rootStyles,
+  },
+];
 
 function Document({
   children,
@@ -27,9 +36,9 @@ function Document({
         <meta name='viewport' content='width=device-width,initial-scale=1' />
         <Meta />
         <Links />
-        <ColorModeScript initialColorMode={'dark'} />
       </head>
       <body>
+        <ColorModeScript initialColorMode={'system'} />
         <main>{children}</main>
         <ScrollRestoration />
         <Scripts />

@@ -27,8 +27,8 @@ export const Sprites = React.memo(
       if (showShiny) {
         if (showFemale) {
           return {
-            front: sprites.front_shiny_female,
-            back: sprites.back_shiny_female,
+            front: sprites.front_shiny_female ?? sprites.front_shiny,
+            back: sprites.back_shiny_female ?? sprites.back_shiny,
           };
         }
 
@@ -40,8 +40,8 @@ export const Sprites = React.memo(
 
       if (showFemale) {
         return {
-          front: sprites.front_female,
-          back: sprites.back_female,
+          front: sprites.front_female ?? sprites.front_default,
+          back: sprites.back_female ?? sprites.back_default,
         };
       }
 

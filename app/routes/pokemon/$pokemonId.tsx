@@ -38,10 +38,10 @@ export default function PokemonRoute() {
   }, [pokemon.flavor_text_entries]);
 
   return (
-    <Box>
+    <Box m={0} marginInlineStart={'0 !important'}>
       <SimpleGrid
-        m={8}
         p={8}
+        h={'100%'}
         bg={useColorModeValue('white', 'gray.700')}
         borderRadius={16}
         columns={2}

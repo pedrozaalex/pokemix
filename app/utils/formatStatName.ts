@@ -1,10 +1,10 @@
 const statMap: { [key: string]: string } = {
   hp: 'HP',
-  attack: 'Atk',
-  defense: 'Def',
-  'special-attack': 'Sp. Atk',
-  'special-defense': 'Sp. Def',
-  speed: 'Speed',
+  attack: 'ATK',
+  defense: 'DEF',
+  'special-attack': 'SpA',
+  'special-defense': 'SpD',
+  speed: 'SPD',
 };
 
 export function formatStatName(stat: string): string {

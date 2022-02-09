@@ -31,6 +31,8 @@ export default function PokedexRoute() {
       h={'100%'}
       align={'stretch'}
       bgColor={useColorModeValue('gray.100', 'gray.900')}
+      p={8}
+      gap={8}
     >
       <PokeIdList
         pokeIdList={data.pokemon.map(p => ({
