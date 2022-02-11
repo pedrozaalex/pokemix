@@ -6,11 +6,11 @@ interface PokemonBadgesProps {
   isMythical: boolean;
 }
 
-export const PokemonBadges: React.FC<PokemonBadgesProps> = ({
+export function PokemonBadges({
   isBaby,
   isLegendary,
   isMythical,
-}) => {
+}: PokemonBadgesProps) {
   return (
     <div className='pokemon-badges'>
       {isBaby && (
@@ -30,4 +30,4 @@ export const PokemonBadges: React.FC<PokemonBadgesProps> = ({
       )}
     </div>
   );
-};
+}

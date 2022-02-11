@@ -27,7 +27,7 @@ const TypeToColorMap: { [key: string]: string } = {
   water: 'blue.500',
 };
 
-export const PokemonTypes: React.FC<PokemonTypesProps> = ({ types }) => {
+export function PokemonTypes({ types }: PokemonTypesProps) {
   return (
     <>
       <HStack>
@@ -44,4 +44,4 @@ export const PokemonTypes: React.FC<PokemonTypesProps> = ({ types }) => {
       </HStack>
     </>
   );
-};
+}
