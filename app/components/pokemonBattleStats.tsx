@@ -1,5 +1,4 @@
 import {
-  Heading,
   HStack,
   List,
   ListItem,
@@ -17,9 +16,6 @@ interface PokemonStatsProps {
 
 export const PokemonBattleStats: React.FC<PokemonStatsProps> = ({ stats }) => (
   <>
-    <Heading as='h2' size='md'>
-      Battle Stats
-    </Heading>
     <HStack as={List} spacing={8} align={'flex-end'}>
       {stats.map(s => (
         <Stat
@@ -38,6 +34,7 @@ export const PokemonBattleStats: React.FC<PokemonStatsProps> = ({ stats }) => (
             borderRadius={'50%'}
             bg={useColorModeValue('gray.200', 'gray.800')}
             fontWeight={'bold'}
+            mb={2}
           >
             {formatStatName(s.stat.name)}
           </StatLabel>
